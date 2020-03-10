@@ -65,7 +65,6 @@ public class HomeResource {
         List<User> test = new ArrayList<User>();
         	test.add(new User());
         	test.add(new User());
-        	System.out.println("revve");
         	return test;
     }
     
@@ -81,25 +80,37 @@ public class HomeResource {
     
     @PUT
     @Path("adressbook/{id}/{friend-id}")
-    public void addFriend(@PathParam("id") String id,@PathParam("friend-id") String friend) {
-    	return;
+    public List<Map> addFriend(@PathParam("id") String id,@PathParam("friend-id") String friend) {
+        List<Map> test = new ArrayList<Map>();
+        test.add(new Map());
+        test.add(new Map());
+    	return test;
     }
     
     @DELETE
     @Path("adressbook/{id}/{friend-id}")
-    public void removeFriend(@PathParam("id") String id,@PathParam("friend-id") String friend) {
-    	return;
+    public List<User> removeFriend(@PathParam("id") String id,@PathParam("friend-id") String friend) {
+        List<User> test = new ArrayList<User>();
+    	test.add(new User());
+    	test.add(new User());
+    	return test;
     }
     
     @POST
-    @Path("addmodifyplace/{id}/é{map}/{coord}")
-    public void modifyPlace(@PathParam("id") String id,@PathParam("map") String map,@PathParam("coord") String coord,@QueryParam("description") String description) {
-    	return;
+    @Path("addmodifyplace/{id}/{map}/{coord}")
+    public List<Places> modifyPlace(@PathParam("id") String id,@PathParam("map") String map,@PathParam("coord") String coord,@QueryParam("description") String description) {
+        List<Places> test = new ArrayList<Places>();
+        test.add(new Places());
+        test.add(new Places());
+        return test;
     }
     
     @DELETE
     @Path("addmodifyplace/{id}/{map}/{coord}")
-    public void removePlace(@PathParam("id") String id,@PathParam("map") String map,@PathParam("coord") String coord) {
-    	return;
+    public List<Places> removePlace(@PathParam("id") String id,@PathParam("map") String map,@PathParam("coord") String coord) {
+        List<Places> test = new ArrayList<Places>();
+        test.add(new Places());
+        test.add(new Places());
+        return test;
     }
 }	
