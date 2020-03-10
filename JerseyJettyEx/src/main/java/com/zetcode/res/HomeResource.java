@@ -63,9 +63,10 @@ public class HomeResource {
     @Produces(MediaType.APPLICATION_JSON)
     public List<User> friendList(@PathParam("id") String id) {
         List<User> test = new ArrayList<User>();
-        test.add(new User());
-        test.add(new User());
-        return test;
+        	test.add(new User());
+        	test.add(new User());
+        	System.out.println("revve");
+        	return test;
     }
     
     @GET
