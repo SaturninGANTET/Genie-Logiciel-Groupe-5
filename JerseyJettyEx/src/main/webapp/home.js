@@ -79,23 +79,6 @@ $(function(){
 });
 
 
-function callInfoPlace(result){
-	var template1 = _.template($('#template1').html());
-
-	var html = template1({
-		"attribute":JSON.stringify(result)
-	});
-
-	$("#resultInfoPlace").append(html);
-}
-
-$(function(){
-	$("#infoPlace").click(function(){
-		getClassServerData("ws/home/infoplace/1/1/1",callInfoPlace);
-	});
-});
-
-
 function callClosestPlace(result){
 	var template1 = _.template($('#template1').html());
 
