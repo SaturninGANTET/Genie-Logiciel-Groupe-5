@@ -14,7 +14,7 @@ import javax.ws.rs.PathParam;
 public class ConnexionResource {
 
     @PUT
-    @Path("{id}/{mdp}")
+    @Path("getmessage/{id}/{mdp}")
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.TEXT_PLAIN)
     public String getMessage(@PathParam("id") String name,@PathParam("mdp") String motDePasse) {
