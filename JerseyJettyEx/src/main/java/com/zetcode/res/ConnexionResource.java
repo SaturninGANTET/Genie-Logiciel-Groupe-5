@@ -13,7 +13,7 @@ import javax.ws.rs.PathParam;
 @Path("/connexion")
 public class ConnexionResource {
 
-    @PUT
+    @GET
     @Path("getmessage/{id}/{mdp}")
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.TEXT_PLAIN)
