@@ -1,53 +1,59 @@
+
+ //lattitude longitude
+//var f = new mm.Follower(map, new mm.Location(37.811530, -122.2666097), 'Test marqueur');
+
 var initMap = function() {
-  var container = document.getElementById('container');
-    
-  leftMap = new MM.Map('left-map', new MM.TemplatedLayer("http://tile.openstreetmap.org/{Z}/{X}/{Y}.png")); 
-  rightMap = new MM.Map('right-map', new MM.TemplatedLayer("http://s3.amazonaws.com/com.modestmaps.bluemarble/{Z}-r{Y}-c{X}.jpg")); 
-     
-  leftMap.parent.style.position = 'absolute';
-  leftMap.parent.style.left = '0';
-  leftMap.parent.style.top = '0';
-  rightMap.parent.style.position = 'absolute';
-  rightMap.parent.style.left = parseInt(container.offsetWidth/2) + 'px';
-  rightMap.parent.style.top = '0';
+  map = new MM.Map('map', new MM.TemplatedLayer("http://tile.openstreetmap.org/{Z}/{X}/{Y}.png")); 
 
-  leftMap.setCenterZoom(new MM.Location(0, 0), 2);
+  map.parent.style.position = 'absolute';
+  map.parent.style.left = '0';
+  map.parent.style.top = '0';
+ 
+  map.setCenterZoom(new MM.Location(48.856614, 2.3522219), 14);
   var pt = new MM.Point(container.offsetWidth*0.75, container.offsetHeight*0.5);
-  var loc = leftMap.pointLocation(pt);
-  rightMap.setCenterZoom(loc, leftMap.getZoom());
+  var loc =  map.pointLocation(pt);
 
-  var leftChanging = false, rightChanging = false;
-  function syncMaps() {
-    if (leftChanging) {
-      var pt = new MM.Point(container.offsetWidth*0.75, container.offsetHeight*0.5);
-      var loc = leftMap.pointLocation(pt);
-      rightMap.setCenterZoom(loc, leftMap.getZoom());
-    }
-    if (rightChanging) {
-      var pt = new MM.Point(-container.offsetWidth*0.25, container.offsetHeight*0.5);
-      var loc = rightMap.pointLocation(pt);
-      leftMap.setCenterZoom(loc, rightMap.getZoom());
-    }
-  }
-  function leftSync() {
-    if (!rightChanging) {
-      leftChanging = true;
-      syncMaps();
-      leftChanging = false;
-     }
-  }
-  function rightSync() {
-    if (!leftChanging) {
-      rightChanging = true;
-      syncMaps();
-      rightChanging = false;
-    }
-  }
+}
 
-  leftMap.addCallback('centered', leftSync);
-  rightMap.addCallback('centered', rightSync);
-  leftMap.addCallback('panned', leftSync);
-  rightMap.addCallback('panned', rightSync);
-  leftMap.addCallback('zoomed', leftSync);
-  rightMap.addCallback('zoomed', rightSync);
+var loadYQL = function(url, callback) {
+     var yqlURL = 'http://query.yahooapis.com/v1/public/yql';
+    var yqlArgs = {
+      q: 'select * from xml where url="'+url+'"',
+      format: 'json',
+      callback: callback
+    };
+    var queries = [];
+    for (var prop in yqlArgs) {
+        queries.push(prop + '=' + yqlArgs[prop]);
+    }
+    var script = document.createElement('script');
+    script.src = yqlURL + '?' + queries.join('&');
+    document.getElementsByTagName('head')[0].appendChild(script);
+}
+
+var cablist = function(data) {
+    if (data && data.query && data.query.results) {
+        var cabs = data.query.results.cabs;
+        if (cabs && cabs.cab) {
+            for (var i = 0; i < cabs.cab.length; i++) {
+                var cabURL = 'http://cabspotting.org/cab.xml.php?cab=' + cabs.cab[i].id;
+                loadYQL(cabURL, 'plotcab');
+            }
+        }
+    }
+}
+ 
+var plotcab = function(data) {
+    //console.log(data);
+    if (data && data.query && data.query.results) {
+        var cab = data.query.results.cab;
+        if (cab && cab.point) {
+            // add cab viz
+            var points = cab.point;
+            if (points.length && points.length > 0) {
+                var location = new com.modestmaps.Location(points[0].lat, points[0].lon);
+                new com.modestmaps.CabFollower(map, location, points[0].cab)
+            }
+        }
+    }
 }

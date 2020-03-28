@@ -2,16 +2,36 @@
 <html>
   <head>
     <meta charset=utf-8 />
-    <title>Modest Maps JS Demo | Two Maps</title>
+    <title>Connexion map</title>
     <link rel='stylesheet' href='style.css'>
+    
   </head>
 
   <body onload='initMap()'>
+
+    <div id="Bouton">
+      <h1>Connexion page </h1>
+      Email:<input type="text" name="email">
+		  </br>
+	  	Password<input type="text" name="pass">
+	  	</br>
+	  	<button id="getMessage">Getmessage</button>
+	  	<div id="resultGetMessage"></div></center>
+	  	</br>
+    </div>
+
     <div id='container'>
-      <div id='left-map'></div>
-      <div id='right-map'></div>
+      <div id='map'></div>
     </div>
     <script src='https://rawgithub.com/stamen/modestmaps-js/master/modestmaps.min.js'></script>
     <script src='app.js'></script>
+    <script src='follower-canvas.js'></script>
+    <script src='cab-follower.js'></script>
+    <script src='cloudmade.js'></script>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+	  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script type="text/javascript" src="connexion.js"></script>
+    
   </body>
 </html>
