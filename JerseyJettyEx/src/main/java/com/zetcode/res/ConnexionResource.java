@@ -21,17 +21,3 @@ public class ConnexionResource {
         return "Tentative de Connexion de " + name + " avec le mdp : " + motDePasse;
     }
 }
-
-
-
-/*
-@Path("rien")
-public class MyMessage {
-
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getMessage() {
-        return "My message\n";
-    }
-}
-*/
