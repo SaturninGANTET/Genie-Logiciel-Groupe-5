@@ -46,18 +46,18 @@ function deleteServerData(url, success){
 }
 
 function callGetMessage(result){
-	var template1 = _.template($('#template1').html());
+	var template1 = _.template($('#template2').html());
 
 	var html = template1({
 		"attribute":JSON.stringify(result)
 	});
 
-	$("#resultgetMessage").append(html);
+	$("#resultgetmessage").append(html);
 }
 
 $(function(){
 	$("#getMessage").click(function(){
-		putTextServerData("ws/connexion/getmessage/1/1/1/1",callGetMessage);
+		putTextServerData("ws/connexion/getMessage/2/1",callGetMessage);
 	});
 });
 
