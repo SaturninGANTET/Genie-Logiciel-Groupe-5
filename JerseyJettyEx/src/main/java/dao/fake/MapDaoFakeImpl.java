@@ -1,7 +1,7 @@
-package fakeDao;
+package dao.fake;
 
-import exercice3.Map;
-import exercice3.MapDao;
+import dao.Map;
+import dao.MapDao;
 
 public class MapDaoFakeImpl implements MapDao{
 

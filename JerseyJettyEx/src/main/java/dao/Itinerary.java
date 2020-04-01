@@ -1,4 +1,4 @@
-package exercice3;
+package dao;
 
 public class Itinerary {
 	private String time;

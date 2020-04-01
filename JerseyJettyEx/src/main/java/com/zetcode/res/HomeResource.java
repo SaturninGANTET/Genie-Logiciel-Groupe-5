@@ -12,9 +12,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import exercice3.Map;
-import exercice3.Places;
-import exercice3.User;
+import dao.Map;
+import dao.Places;
+import dao.User;
 
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;

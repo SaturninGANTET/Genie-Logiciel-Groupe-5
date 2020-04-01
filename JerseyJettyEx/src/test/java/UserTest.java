@@ -7,15 +7,13 @@ import javax.jdo.PersistenceManagerFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.example.datanucleus.dao.Action;
-import com.example.datanucleus.dao.ActionContainer;
-
-import exercice3.User;
+import dao.User;
 
 public class UserTest {
-
+	//layer = nom de la table dans la base de donnée
 	@Test
 	public void test() {
+		//Create the dao with name Example
 		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("Example");
 		Long userId = null;
 
@@ -25,6 +23,7 @@ public class UserTest {
 
 			User user = new User();
 			user.setName("Test");
+			user.setEmail("email");
 			user = pm.makePersistent(user);
 			
 			userId = user.getId();
@@ -37,6 +36,7 @@ public class UserTest {
 			PersistenceManager pm = pmf.getPersistenceManager();
 
 			User user = pm.getObjectById(User.class, userId);
+			
 			Assert.assertEquals("Test", user.getName());
 
 			pm.close();

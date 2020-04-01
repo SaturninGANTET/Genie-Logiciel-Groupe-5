@@ -1,8 +1,18 @@
-package exercice3;
+package dao;
 
 import java.util.List;
 
+import javax.jdo.annotations.IdGeneratorStrategy;
+import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.PrimaryKey;
+
+@PersistenceCapable
+
 public class Places {
+	
+	@PrimaryKey
+	@Persistent(valueStrategy = IdGeneratorStrategy.NATIVE)
 	private String name;
 	private String message;
 	private String position; // name of the place, but we can add a position with a number calculate 
