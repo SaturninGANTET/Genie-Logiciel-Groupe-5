@@ -1,6 +1,11 @@
 package exercice3;
 
 import java.util.List;
+
+import javax.jdo.annotations.IdGeneratorStrategy;
+import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.PrimaryKey;
 /*
  * 
  *a user can have a list of other user to add his friend.
@@ -8,7 +13,13 @@ import java.util.List;
  *With this configuration we can have the favorite place of a friend
  *Or we can think a friend have a list of map witch contain a list of places.
  */
+@PersistenceCapable
 public class User {
+
+	@PrimaryKey
+	@Persistent(valueStrategy = IdGeneratorStrategy.NATIVE)
+	protected Long id = null;
+	
 	private String name;
 	private String position;
 	private String password;
@@ -17,6 +28,13 @@ public class User {
 	private List<User> Lfriends;
 	private List<Itinerary> Litinerary;
 	
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getName() {
 		return name;
 	}
