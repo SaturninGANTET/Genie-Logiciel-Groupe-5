@@ -11,6 +11,7 @@ import dao.User;
 
 public class UserTest {
 	//layer = nom de la table dans la base de donnée
+	
 	@Test
 	public void test() {
 		//Create the dao with name Example

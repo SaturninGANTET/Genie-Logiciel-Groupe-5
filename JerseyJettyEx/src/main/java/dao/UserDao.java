@@ -11,9 +11,9 @@ public interface UserDao {
 	
 	// pour la vraie dao, il ne faudra pas faire un return vide.
 	
-	void addUser();
+	void addUser(User user);
 
-	void getUser();
+	List<User> getUser(String username);
 	//List<User> getUser();
 }
 
