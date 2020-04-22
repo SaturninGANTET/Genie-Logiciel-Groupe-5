@@ -26,7 +26,6 @@ public class UserDaoImpl implements UserDao{
 	}
 	
 	@SuppressWarnings("unchecked")
-	@Test
 	public List<User> getUser(String name) {
 		
 		List<User> users = null;
@@ -36,7 +35,7 @@ public class UserDaoImpl implements UserDao{
 		try{
 			tx.begin();
 			Query q = pm.newQuery(User.class);
-			q.declareParameters("Sting user");
+			q.declareParameters("String user");
 			q.setFilter("username == user");
 			
 			users = (List<User>) q.execute(name);

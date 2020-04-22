@@ -15,7 +15,7 @@ public class UserTest {
 	@Test
 	public void test() {
 		//Create the dao with name Example
-		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("Example");
+		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("DataSource");
 		Long userId = null;
 
 		// Save a container with 3 actions
