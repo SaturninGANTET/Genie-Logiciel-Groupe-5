@@ -45,6 +45,60 @@ macarte.on('click', function(e) {
       map1.closePopup();
   });    
 });
-  
 
 }
+
+
+function getServerData(url, success){
+    $.ajax({
+		type:'GET',
+        dataType: "json",
+        url: url
+    }).done(success);
+}
+
+function postServerData(url, success){
+    $.ajax({
+		type: 'POST',
+        dataType: "json",
+        url: url
+    }).done(success);
+}
+
+function getClassServerData(url, success){
+    $.ajax({
+        url: url
+    }).done(success);
+}
+
+function putServerData(url, success){
+    $.ajax({
+		type: 'PUT',
+        dataType: "json",
+        url: url
+    }).done(success);
+}
+
+function putTextServerData(url, success){
+    $.ajax({
+		type: 'PUT',
+        dataType: "text",
+        url: url
+    }).done(success);
+}
+
+function callAddPlace(result){
+	var template1 = _.template($('#test').html());
+
+	var html = template1({
+		"attribute":JSON.stringify(result)
+	});
+
+	$("#resultAddPlace").append(html);
+}
+
+$(function(){
+	$("#addPlace").click(function(){
+		putTextServerData("ws/lef/addplace/1/1",callAddPlace);
+	});
+});

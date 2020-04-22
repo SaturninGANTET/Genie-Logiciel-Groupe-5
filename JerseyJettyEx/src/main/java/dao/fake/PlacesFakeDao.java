@@ -16,11 +16,11 @@ public class PlacesFakeDao implements PlacesDao{
 		
 	}
 	
-	public List<Places> getPlaces(Places places) {
-		places = new Places();
-		places.setName("name");
-		places.setMessage("Do something");
-		places.setPosition("position");
+	public List<Places> getPlaces(String name) {
+		
+		Places places = new Places();
+		places.setName(name);
+
 
 		List<Places> result = new ArrayList<Places>();
 		result.add(places);

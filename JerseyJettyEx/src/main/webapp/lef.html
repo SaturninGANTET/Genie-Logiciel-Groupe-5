@@ -5,6 +5,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
 
+        <body>
+            
+        </body>
+        
+
         <!-- Fichiers CSS -->
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
 		
@@ -22,6 +27,29 @@
 		<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
 		<script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
 		
-		<script src="scripts.js"></script>
+        <script src="scripts.js"></script>
+
+        <!-- Bouton JS -->
+        <script id="test" type="text/template">
+            <div>
+                <%= attribute %>
+            </div>
+        </script>
+        <h1>It works !</h1>
+
+        <button id="addPlace">AddPlace</button>
+        <div id="resultAddPlace"></div>
+
+        <center><h1>Connexion page </h1>
+            Email:<input type="text" name="email">
+            </br>
+            Password<input type="text" name="pass">
+            
+            </br>
+            <button id="getMessage">GetMessage</button>
+            <div id="resultgetmessage"></div></center>
+
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+	    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
     </body>
 </html>
