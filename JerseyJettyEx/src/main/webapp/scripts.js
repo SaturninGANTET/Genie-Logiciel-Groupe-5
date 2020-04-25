@@ -11,13 +11,25 @@ window.onload = function(){
         maxZoom: 20
     }).addTo(macarte);
     
-    L.Routing.control({
+    L.Routing.control({ 
       waypoints: [
         L.latLng(57.74, 11.94),
         L.latLng(57.6792, 11.949)
-    ],
+    ],  
       router: L.Routing.mapbox('pk.eyJ1IjoibWF4aW1lNTU1NTUiLCJhIjoiY2s5M3p1c3R2MDEzNzNmbzExYjY5cHRhcSJ9.xjtb4gJp4llULxFZzuitwQ')
   }).addTo(macarte);
+
+  //adding barre de recherche
+  var searchControl = L.esri.Geocoding.geosearch().addTo(macarte);
+
+  var results = L.layerGroup().addTo(macarte);
+
+  searchControl.on('results', function (data) {
+    results.clearLayers();
+    for (var i = data.results.length - 1; i >= 0; i--) {
+      results.addLayer(L.marker(data.results[i].latlng));
+    }
+  });
 
   function createButton(label, container) {
     var btn = L.DomUtil.create('button', '', container);
@@ -25,6 +37,7 @@ window.onload = function(){
     btn.innerHTML = label;
     return btn;
 }
+
 
 macarte.on('click', function(e) {
     var container = L.DomUtil.create('div'),
@@ -35,19 +48,18 @@ macarte.on('click', function(e) {
         .setContent(container)
         .setLatLng(e.latlng)
         .openOn(macarte);
-    L.DomEvent.on(startBtn, 'click', function() {
-        control.spliceWaypoints(0, 1, e.latlng);
-        map1.closePopup();
-    });
 
-    L.DomEvent.on(destBtn, 'click', function() {
-      control.spliceWaypoints(control.getWaypoints().length - 1, 1, e.latlng);
-      map1.closePopup();
-  });    
+   
 });
-
+L.DomEvent.on(startBtn, 'click', function() {
+    control.spliceWaypoints(0, 1, e.latlng);
+    macarte.closePopup();
+});
+L.DomEvent.on(destBtn, 'click', function() {
+    control.spliceWaypoints(control.getWaypoints().length - 1, 1, e.latlng);
+    macarte.closePopup();
+});
 }
-
 
 function getServerData(url, success){
     $.ajax({
@@ -102,3 +114,4 @@ $(function(){
 		putTextServerData("ws/lef/addplace/1/1",callAddPlace);
 	});
 });
+
