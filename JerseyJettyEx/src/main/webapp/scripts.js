@@ -19,6 +19,14 @@ window.onload = function(){
       router: L.Routing.mapbox('pk.eyJ1IjoibWF4aW1lNTU1NTUiLCJhIjoiY2s5M3p1c3R2MDEzNzNmbzExYjY5cHRhcSJ9.xjtb4gJp4llULxFZzuitwQ')
   }).addTo(macarte);
 
+
+  // ajouter un marqueur sur paris lattitude longitude
+  L.marker([48.866667, 2.333333],
+    {
+
+    }).addTo(macarte);
+
+
   //adding barre de recherche
   var searchControl = L.esri.Geocoding.geosearch().addTo(macarte);
 
@@ -38,6 +46,29 @@ window.onload = function(){
     return btn;
 }
 
+// test marqueur par click layer group
+
+
+
+
+
+// test popup en click
+
+/*
+var popup = L.popup();
+
+function onMapClick(e) {
+    popup
+        .setLatLng(e.latlng)
+        .setContent("You clicked the map at " + e.latlng.toString())
+        .openOn(macarte);
+}
+
+macarte.on('click', onMapClick);
+
+*/
+
+// affiche un message de destination en cliquant
 
 macarte.on('click', function(e) {
     var container = L.DomUtil.create('div'),
@@ -48,17 +79,17 @@ macarte.on('click', function(e) {
         .setContent(container)
         .setLatLng(e.latlng)
         .openOn(macarte);
-
+    L.DomEvent.on(startBtn, 'click', function() {
+        control.spliceWaypoints(0, 1, e.latlng);
+       macarte.closePopup();
+    });
+    L.DomEvent.on(destBtn, 'click', function() {
+         control.spliceWaypoints(control.getWaypoints().length - 1, 1, e.latlng);
+        macarte.closePopup();
+    });
    
 });
-L.DomEvent.on(startBtn, 'click', function() {
-    control.spliceWaypoints(0, 1, e.latlng);
-    macarte.closePopup();
-});
-L.DomEvent.on(destBtn, 'click', function() {
-    control.spliceWaypoints(control.getWaypoints().length - 1, 1, e.latlng);
-    macarte.closePopup();
-});
+
 }
 
 function getServerData(url, success){
