@@ -25,40 +25,11 @@ public class UserDaoImpl implements UserDao{
 		this.pmf = pmf;
 	}
 	
-	@SuppressWarnings("unchecked")
-	public List<User> getUser(String name) {
-		
-		List<User> users = null;
-		List<User> detached = new ArrayList<User>();
-		PersistenceManager pm = pmf.getPersistenceManager();
-		Transaction tx = pm.currentTransaction();
-		try{
-			tx.begin();
-			Query q = pm.newQuery(User.class);
-			q.declareParameters("String user");
-			q.setFilter("username == user");
-			
-			users = (List<User>) q.execute(name);
-			detached = (List<User>) pm.detachCopyAll(users);
-			
-			tx.commit();
-		}
-		finally {
-			if(tx.isActive()) {
-				tx.rollback();
-			}
-			pm.close();
-		}
-		return detached;
-	}
-
 	public void addUser(User user) {
-
 			PersistenceManager pm = pmf.getPersistenceManager();
 			Transaction tx = pm.currentTransaction();
 			try {
 				tx.begin();
-				
 				pm.makePersistent(user);
 				
 				tx.commit();
@@ -71,6 +42,59 @@ public class UserDaoImpl implements UserDao{
 			}
 
 		}
+	
+	@SuppressWarnings("unchecked")
+	public List<User> getUser(String name) {
+		
+		List<User> users = null;
+		List<User> detached = new ArrayList<User>();
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try{
+			tx.begin();
+			Query q = pm.newQuery(User.class);
+			q.declareParameters("String name");
+			q.setFilter("email == name");
+			
+			users = (List<User>) q.execute(name);
+			detached = (List<User>) pm.detachCopyAll(users);
+			
+			tx.commit();
+		}
+		finally {
+			if(tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+		for(User u : detached) {
+			System.out.println(u.getEmail());
+		}
+		return detached;
+	}
+	
+	public List<User> getAllUser(){
+		
+		List<User> users = null;
+		List<User> detached = new ArrayList<User>();
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try{
+			tx.begin();
+			Query q = pm.newQuery(User.class);
+			users = (List<User>) q.execute();
+			detached = (List<User>) pm.detachCopyAll(users);
+			tx.commit();
+		}
+		finally {
+			if(tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+		return detached;		
+	}
+
 
 	public void deleteUser(String name) {
 		return;

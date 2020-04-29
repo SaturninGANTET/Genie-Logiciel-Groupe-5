@@ -22,7 +22,6 @@ import java.util.List;
 
 @Path("/lef")
 public class ConnexionResource {
-
     @PUT
     @Path("putmessage/{id}/{mdp}")
     @Produces(MediaType.TEXT_PLAIN)

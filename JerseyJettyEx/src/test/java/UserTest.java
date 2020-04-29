@@ -1,49 +1,32 @@
-
-
 import javax.jdo.JDOHelper;
-import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 import dao.User;
+import dao.UserDao;
+import dao.dn.UserDaoImpl;
 
 public class UserTest {
-	//layer = nom de la table dans la base de donnée
-	
+
 	@Test
 	public void test() {
-		//Create the dao with name Example
-		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("DataSource");
-		Long userId = null;
+		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("Example");
+		UserDao actionDao = new UserDaoImpl(pmf);
 
-		// Save a container with 3 actions
-		{
-			PersistenceManager pm = pmf.getPersistenceManager();
+		Assert.assertEquals(0, actionDao.getUser("user1").size());
 
-			User user = new User();
-			user.setName("Test");
-			user.setEmail("email");
-			user = pm.makePersistent(user);
-			
-			userId = user.getId();
-			
-			pm.close();
-		}
+		User action = new User();
+		action.setEmail("user1");
+		action.setTitle("A title");
+		action.setContent("A content");
 
-		// Retrieve this container
-		{
-			PersistenceManager pm = pmf.getPersistenceManager();
+		actionDao.addAction(action);
 
-			User user = pm.getObjectById(User.class, userId);
-			
-			Assert.assertEquals("Test", user.getName());
+		Assert.assertEquals(1, actionDao.getActions("user1").size());
 
-			pm.close();
-		}
-
-		pmf.close();
+		DAO.getActionDao().getActions("user1");
 	}
 
 }

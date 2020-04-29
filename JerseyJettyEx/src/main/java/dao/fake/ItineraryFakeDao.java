@@ -18,6 +18,4 @@ public class ItineraryFakeDao {
 
 		return result;
 	}
-	
-	
 }

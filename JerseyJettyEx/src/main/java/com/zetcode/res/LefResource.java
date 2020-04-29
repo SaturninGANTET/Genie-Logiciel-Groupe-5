@@ -10,9 +10,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.PathParam;
 
+import dao.Dao;
 import dao.Map;
 import dao.Places;
 import dao.User;
+import dao.UserDao;
 
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.DefaultValue;
@@ -29,6 +31,16 @@ public class LefResource {
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public String putMessage(@FormParam("email") String name,@FormParam("pass") String motDePasse) {
-        return "Tentative de Connexion de " + name + " avec le mdp : " + motDePasse;
+    	UserDao userDao = Dao.getUserDao();
+    	User nouveau = new User();
+    	nouveau.setEmail(name);
+    	nouveau.setPassword(motDePasse);
+    	userDao.addUser(nouveau);
+    	String listUser = "";
+    	for(User u : userDao.getAllUser()){
+        	listUser += u.getEmail() + '\n';
+        }
+        return "Tentative de Connexion de " + name + " avec le mdp : " + motDePasse
+        		+ "Liste des emails des utilisateurs : \n" + listUser;
     }
 }

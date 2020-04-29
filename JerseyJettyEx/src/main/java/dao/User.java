@@ -16,8 +16,8 @@ import javax.jdo.annotations.PrimaryKey;
 @PersistenceCapable
 public class User {
 
-	@PrimaryKey
-	@Persistent(valueStrategy = IdGeneratorStrategy.NATIVE)
+//	@PrimaryKey
+//	@Persistent(valueStrategy = IdGeneratorStrategy.NATIVE)
 	protected Long id = null;
 	
 	private String name;
@@ -77,5 +77,4 @@ public class User {
 	public void setLitinerary(List<Itinerary> litinerary) {
 		Litinerary = litinerary;
 	}
-	
 }
