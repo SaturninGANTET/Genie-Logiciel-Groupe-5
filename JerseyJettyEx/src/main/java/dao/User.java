@@ -18,7 +18,7 @@ public class User {
 
 //	@PrimaryKey
 //	@Persistent(valueStrategy = IdGeneratorStrategy.NATIVE)
-	protected Long id = null;
+	public int id = 0;
 	
 	private String name;
 	private String position;
@@ -29,10 +29,10 @@ public class User {
 	private List<Itinerary> Litinerary;
 	
 	
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public String getName() {

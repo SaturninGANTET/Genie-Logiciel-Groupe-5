@@ -6,13 +6,14 @@ import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
-
 import dao.Map;
 import dao.User;
 import dao.UserDao;
 
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 // comment changer le nom de l'annotation @Test, aucune autre ne fonctionne
 
@@ -25,9 +26,10 @@ public class UserDaoImpl implements UserDao{
 		this.pmf = pmf;
 	}
 	
-	public void addUser(User user) {
+	public boolean addUser(User user) {
 			PersistenceManager pm = pmf.getPersistenceManager();
 			Transaction tx = pm.currentTransaction();
+			boolean b =true;
 			try {
 				tx.begin();
 				pm.makePersistent(user);
@@ -40,6 +42,7 @@ public class UserDaoImpl implements UserDao{
 				}
 				pm.close();
 			}
+			return b;
 
 		}
 	
@@ -72,6 +75,7 @@ public class UserDaoImpl implements UserDao{
 		return detached.get(0);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<User> getAllUser(){		
 		List<User> users = null;
 		List<User> detached = new ArrayList<User>();
@@ -90,12 +94,59 @@ public class UserDaoImpl implements UserDao{
 			}
 			pm.close();
 		}
-		return detached;		
+		return detached;	
 	}
 
 
-	public void deleteUser(String name) {
-		return;
+	@Override
+	public boolean deleteUser(String friend) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		boolean b =true;
+		try{
+			tx.begin();
+			User user=this.nomUser(friend).get(0);
+			int userid = user.id;
+			if(user!=null) {
+				Query q = pm.newQuery(User.class);
+				q.declareParameters("Integer userid");
+				q.setFilter("id == userid");
+				q.deletePersistentAll(userid);
+				tx.commit();
+			}
+		}
+		finally {
+			if(tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+		return b;
+	}
+	
+	@SuppressWarnings({ "unchecked", "finally" })
+	@Override
+	public List<User> nomUser(String search){
+		List<User> map=null;
+		List<User> detached= new ArrayList<User>();
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try{
+			tx.begin();
+			Query q = pm.newQuery(User.class);
+			q.declareParameters("String search");
+			q.setFilter("name.startsWith(search)");
+			map =(List<User>) q.execute(search);
+			detached = (List<User>) pm.detachCopyAll(map);
+			tx.commit();
+		}
+		finally {
+			if(tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+			return detached;
+		}
 	}
 		
 	public void addFriend(User user, String friendName) {

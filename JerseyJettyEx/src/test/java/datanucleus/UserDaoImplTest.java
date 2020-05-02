@@ -18,19 +18,27 @@ public class UserDaoImplTest {
 	public void test() {
 		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("DataSource");
 		UserDao actionDao = new UserDaoImpl(pmf);
+		
 
 		Assert.assertEquals(0, actionDao.getAllUser().size());
 
 		User action = new User();
-		action.setEmail("testo");
+		action.setEmail("nouvelle");
 		action.setPassword("mdp");
-		action.setName("A name");
+		action.setName("nouvelle");
 
 		actionDao.addUser(action);
-		action.setEmail("test");
+		action.setEmail("nouvelle");
 		actionDao.addUser(action);
-		action.setEmail("test");
-		actionDao.addUser(action);		
+		action.setEmail("nouvelle");
+		actionDao.addUser(action);	
+		
 		Assert.assertEquals(3, actionDao.getAllUser().size());
+		
+        Assert.assertTrue(actionDao.addUser(action));
+        Assert.assertEquals("nouvelle", actionDao.getUserByEmail("nouvelle").getName());
+        Assert.assertSame("nouvelle",actionDao.nomUser("nouvelle").get(0).getName());
+        Assert.assertTrue(actionDao.deleteUser("nouvelle"));
 	}
 }
+

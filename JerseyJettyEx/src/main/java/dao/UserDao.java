@@ -11,12 +11,14 @@ public interface UserDao {
 	
 	// pour la vraie dao, il ne faudra pas faire un return vide.
 	
-	void addUser(User user);
+	boolean addUser(User user);
 
 	User getUserByEmail(String username);
 	//List<User> getUser();
 	
 	List<User> getAllUser();
+	boolean deleteUser(String friend);
+	List<User> nomUser(String search);
 }
 
 /*
