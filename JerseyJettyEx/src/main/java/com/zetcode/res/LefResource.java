@@ -22,6 +22,7 @@ import javax.ws.rs.FormParam;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Path("/login")
 public class LefResource {
@@ -30,7 +31,24 @@ public class LefResource {
     @Path("/login")
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public String putMessage(@FormParam("email") String name,@FormParam("pass") String motDePasse) {
+    public String logIn(@FormParam("email") String name,@FormParam("pass") String motDePasse) {
+    	UserDao userDao = Dao.getUserDao();
+    	User user = userDao.getUserByEmail(name);
+    	if(Objects.isNull(user)) {
+    		return "Email ou mot de passe incorrect";
+    	}
+    	else if(user.getPassword().equals(motDePasse)) {
+    		return "Connecté";
+    	} else {
+    		return "EMail ou mot de passe incorrect";
+    	}
+    }
+    
+    @POST
+    @Path("/register")
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public String register(@FormParam("email") String name,@FormParam("pass") String motDePasse) {
     	UserDao userDao = Dao.getUserDao();
     	User nouveau = new User();
     	nouveau.setEmail(name);

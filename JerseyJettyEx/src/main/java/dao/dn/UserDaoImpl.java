@@ -44,8 +44,7 @@ public class UserDaoImpl implements UserDao{
 		}
 	
 	@SuppressWarnings("unchecked")
-	public List<User> getUser(String name) {
-		
+	public User getUserByEmail(String name) {
 		List<User> users = null;
 		List<User> detached = new ArrayList<User>();
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -67,14 +66,13 @@ public class UserDaoImpl implements UserDao{
 			}
 			pm.close();
 		}
-		for(User u : detached) {
-			System.out.println(u.getEmail());
+		if(detached.size() == 0) {
+			return null;
 		}
-		return detached;
+		return detached.get(0);
 	}
 	
-	public List<User> getAllUser(){
-		
+	public List<User> getAllUser(){		
 		List<User> users = null;
 		List<User> detached = new ArrayList<User>();
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -99,12 +97,7 @@ public class UserDaoImpl implements UserDao{
 	public void deleteUser(String name) {
 		return;
 	}
-	
-
-	public boolean exists(String username){
-		return true;
-	}
-	
+		
 	public void addFriend(User user, String friendName) {
 		return;
 	}
