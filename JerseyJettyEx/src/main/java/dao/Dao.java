@@ -29,6 +29,4 @@ public class Dao {
 			return new UserDaoImpl(pmf);
 		}
 	}
-	
-	
 }

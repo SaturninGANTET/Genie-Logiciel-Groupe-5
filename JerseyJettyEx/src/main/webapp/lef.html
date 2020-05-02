@@ -22,9 +22,6 @@
 		
 		<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
 		<script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
-		
-        <script src="scripts.js"></script>
-
         <!-- Adding -->
 
 
@@ -55,12 +52,12 @@
              <div class="limiter"></div>
               <div id="Bouton">
               <div class="wrap-login100"></div>
-                <form class="login100-form validate-form" action="ws/login/login" method="POST">
-                  <span class="login100-form-title p-b-26">
-                           Connexion
-                       </span>
+                <form class="login100-form validate-form" action="ws/login/login" method="POST" id="form-login">
+                <span class="login100-form-title p-b-26">
+                    Connexion
+                </span>
               <div class="wrap-input100 validate-input" data-validate = "Valid email is: a@b.c">
-                                <input class="input100" type="text" name="email">
+                                <input class="input100" type="text" name="email" id="champ-email">
                                 <span class="focus-input100" data-placeholder="Email"></span>
                             </div>
         
@@ -68,7 +65,7 @@
                                 <span class="btn-show-pass">
                                     <i class="zmdi zmdi-eye"></i>
                                 </span>
-                                <input class="input100" type="password" name="pass">
+                                <input class="input100" type="password" name="pass" id="champ-pass">
                                 <span class="focus-input100" data-placeholder="Password"></span>
                             </div>
                   <div class="container-login100-form-btn">
@@ -84,7 +81,7 @@
 							Don’t have an account?
 						</span>
 
-						<a class="txt2" href="#">
+						<a class="txt2" id="Signup" href="javascript:register();">
 							Sign Up
 						</a>
 					</div>
@@ -95,10 +92,12 @@
             <script src="follower-canvas.js"></script>
             <script src="cab-follower.js"></script>
             <script src="cloudmade.js"></script>
+
         
             <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
-              <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
             <script type="text/javascript" src="connexion.js"></script>
+           <script src="scripts.js"></script>
             
           
     </body>

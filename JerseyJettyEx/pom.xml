@@ -121,6 +121,26 @@
                     <mainClass>com.zetcode.app.Main</mainClass>
                 </configuration>
             </plugin>
+            
+			<plugin>
+				<groupId>org.datanucleus</groupId>
+				<artifactId>datanucleus-maven-plugin</artifactId>
+                <version>4.0.0-release</version>
+				<configuration>
+					<api>JDO</api>
+					<props>${basedir}/datanucleus.properties</props>
+					<log4jConfiguration>${basedir}/src/main/resources/log4j.properties</log4jConfiguration>
+					<verbose>true</verbose>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>process-classes</phase>
+						<goals>
+							<goal>enhance</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
         </plugins>
     </build>
     

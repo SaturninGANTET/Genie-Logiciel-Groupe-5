@@ -16,7 +16,7 @@ public class UserDaoImplTest {
 
 	@Test
 	public void test() {
-		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("Example");
+		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("DataSource");
 		UserDao actionDao = new UserDaoImpl(pmf);
 
 		Assert.assertEquals(0, actionDao.getAllUser().size());
@@ -30,9 +30,7 @@ public class UserDaoImplTest {
 		action.setEmail("test");
 		actionDao.addUser(action);
 		action.setEmail("test");
-		actionDao.addUser(action);
-		
-
+		actionDao.addUser(action);		
 		Assert.assertEquals(3, actionDao.getAllUser().size());
 	}
 }
