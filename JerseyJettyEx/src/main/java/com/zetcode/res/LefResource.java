@@ -49,16 +49,17 @@ public class LefResource {
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public String register(@FormParam("email") String name,@FormParam("pass") String motDePasse) {
+    	if(Objects.isNull(name) ||Objects.isNull(motDePasse)) {
+    		return "Remplir tout les champs";
+    	}
     	UserDao userDao = Dao.getUserDao();
+    	if(!Objects.isNull(userDao.getUserByEmail(name))){
+    		return "L'utilisateur existe déjà";
+    	}
     	User nouveau = new User();
     	nouveau.setEmail(name);
     	nouveau.setPassword(motDePasse);
     	userDao.addUser(nouveau);
-    	String listUser = "";
-    	for(User u : userDao.getAllUser()){
-        	listUser += u.getEmail() + '\n';
-        }
-        return "Tentative de Connexion de " + name + " avec le mdp : " + motDePasse
-        		+ "Liste des emails des utilisateurs : \n" + listUser;
+    	return "Utilisateur ajouté";
     }
 }
