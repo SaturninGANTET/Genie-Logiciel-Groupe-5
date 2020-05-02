@@ -6,7 +6,6 @@ import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
-import org.junit.Test;
 
 import dao.Map;
 import dao.User;
@@ -16,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 // comment changer le nom de l'annotation @Test, aucune autre ne fonctionne
+
 
 public class UserDaoImpl implements UserDao{
 	//Create the dao with name Example
