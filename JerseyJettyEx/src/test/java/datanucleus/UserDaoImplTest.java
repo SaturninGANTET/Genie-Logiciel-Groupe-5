@@ -23,21 +23,22 @@ public class UserDaoImplTest {
 		Assert.assertEquals(0, actionDao.getAllUser().size());
 
 		User action = new User();
-		action.setEmail("nouvelle");
+		action.setEmail("test");
 		action.setPassword("mdp");
-		action.setName("nouvelle");
+		action.setName("test");
 
 		actionDao.addUser(action);
-		action.setEmail("nouvelle");
+		action.setEmail("test");
 		actionDao.addUser(action);
-		action.setEmail("nouvelle");
+		action.setEmail("test");
 		actionDao.addUser(action);	
 		
 		Assert.assertEquals(3, actionDao.getAllUser().size());
 		
         Assert.assertTrue(actionDao.addUser(action));
-        Assert.assertEquals("nouvelle", actionDao.getUserByEmail("nouvelle").getName());
-        Assert.assertSame("nouvelle",actionDao.nomUser("nouvelle").get(0).getName());
+        Assert.assertEquals("test", actionDao.getUserByEmail("test").getName());
+        Assert.assertSame("test",actionDao.nomUser("test").get(0).getName());
+        Assert.assertTrue(actionDao.modifyUserName("test","nouvelle"));
         Assert.assertTrue(actionDao.deleteUser("nouvelle"));
 	}
 }

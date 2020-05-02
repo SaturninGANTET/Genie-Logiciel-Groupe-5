@@ -124,6 +124,30 @@ public class UserDaoImpl implements UserDao{
 		return b;
 	}
 	
+	@Override
+	public boolean modifyUserName(String name,String newname) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		boolean b =true;
+		 try {
+	          	tx.begin();
+	            User u = this.nomUser(name).get(0);
+	            if(u!=null) {
+	                u.setName(newname);
+	                this.deleteUser(name);
+	                pm.makePersistent(u);
+	                tx.commit();
+	            }
+		 }
+		finally {
+			if(tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+		return b;
+	}
+	
 	@SuppressWarnings({ "unchecked", "finally" })
 	@Override
 	public List<User> nomUser(String search){

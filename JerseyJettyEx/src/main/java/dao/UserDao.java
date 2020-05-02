@@ -18,6 +18,7 @@ public interface UserDao {
 	
 	List<User> getAllUser();
 	boolean deleteUser(String friend);
+	boolean modifyUserName(String name,String newname);
 	List<User> nomUser(String search);
 }
 
