@@ -70,6 +70,52 @@ macarte.on('click', onMapClick);
 
 // affiche un message de destination en cliquant
 
+//affiche un markeur
+
+macarte.on('click', function(e) {
+
+    var marker = L.marker(e.latlng, { draggable: true }).addTo(macarte);
+   marker.bindPopup('<span id="btn1">Name</span><br><br><button id="btn2">add message</button><br><br><button id="btn3">add picture</button><br>').openPopup();
+   
+   marker.on('dblclick', function(e) {
+     console.log(e);
+     macarte.removeLayer(marker);
+   
+   });
+
+   } );
+   macarte.locate({
+     setView: true,
+     maxZoom: 16
+   })
+   macarte.on('locationfound', function(e) {
+     var radius = e.accuracy / 2;
+     L.marker(e.latlng).addTo(macarte).bindPopup("Here you are").openPopup();
+     L.circle(e.latlng, radius).addTo(macarte);
+   });
+   
+   macarte.on('locationerror', function(e) {
+     console.log('la=====>', e);
+   });
+   
+   macarte.on("popupopen", function(){
+     document.getElementById("btn1").onclick = function(){
+       null;
+     }
+   });
+   macarte.on("popupopen", function(){
+     document.getElementById("btn2").onclick = function(){
+      null;
+     }
+   });
+   macarte.on("popupopen", function(){
+     document.getElementById("btn3").onclick = function(){
+      null;
+     }
+   });
+
+}
+   /*
 macarte.on('click', function(e) {
     var container = L.DomUtil.create('div'),
         startBtn = createButton('Start from this location', container),
@@ -90,7 +136,7 @@ macarte.on('click', function(e) {
    
 });
 
-}
+*/
 
 function getServerData(url, success){
     $.ajax({
