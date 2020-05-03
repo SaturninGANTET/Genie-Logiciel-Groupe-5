@@ -148,6 +148,126 @@ public class UserDaoImpl implements UserDao{
 		return b;
 	}
 	
+	@Override
+	public boolean modifyUserPosition(String name,String newname) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		boolean b =true;
+		 try {
+	          	tx.begin();
+	            User u = this.nomUser(name).get(0);
+	            if(u!=null) {
+	                u.setPosition(newname);
+	                this.deleteUser(name);
+	                pm.makePersistent(u);
+	                tx.commit();
+	            }
+		 }
+		finally {
+			if(tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+		return b;
+	}
+	
+	@Override
+	public boolean modifyUserPassword(String name,String newname) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		boolean b =true;
+		 try {
+	          	tx.begin();
+	            User u = this.nomUser(name).get(0);
+	            if(u!=null) {
+	                u.setPassword(newname);
+	                this.deleteUser(name);
+	                pm.makePersistent(u);
+	                tx.commit();
+	            }
+		 }
+		finally {
+			if(tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+		return b;
+	}
+	
+	@Override
+	public boolean modifyUserEmail(String name,String newname) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		boolean b =true;
+		 try {
+	          	tx.begin();
+	            User u = this.nomUser(name).get(0);
+	            if(u!=null) {
+	                u.setEmail(newname);
+	                this.deleteUser(name);
+	                pm.makePersistent(u);
+	                tx.commit();
+	            }
+		 }
+		finally {
+			if(tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+		return b;
+	}
+	
+	@Override
+	public boolean modifyUserLmap(String name,List<Map> newname) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		boolean b =true;
+		 try {
+	          	tx.begin();
+	            User u = this.nomUser(name).get(0);
+	            if(u!=null) {
+	                u.setLmap(newname);
+	                this.deleteUser(name);
+	                pm.makePersistent(u);
+	                tx.commit();
+	            }
+		 }
+		finally {
+			if(tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+		return b;
+	}
+	
+	@Override
+	public boolean modifyUserLfriends(String name,List<User> newname) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		boolean b =true;
+		 try {
+	          	tx.begin();
+	            User u = this.nomUser(name).get(0);
+	            if(u!=null) {
+	                u.setLfriends(newname);
+	                this.deleteUser(name);
+	                pm.makePersistent(u);
+	                tx.commit();
+	            }
+		 }
+		finally {
+			if(tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+		return b;
+	}
+	
 	@SuppressWarnings({ "unchecked", "finally" })
 	@Override
 	public List<User> nomUser(String search){

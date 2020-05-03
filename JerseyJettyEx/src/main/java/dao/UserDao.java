@@ -19,6 +19,11 @@ public interface UserDao {
 	List<User> getAllUser();
 	boolean deleteUser(String friend);
 	boolean modifyUserName(String name,String newname);
+	boolean modifyUserPosition(String name,String newname);
+	boolean modifyUserPassword(String name,String newname);
+	boolean modifyUserEmail(String name,String newname);
+	boolean modifyUserLmap(String name,List<Map> newname);
+	boolean modifyUserLfriends(String name,List<User> newname);
 	List<User> nomUser(String search);
 }
 

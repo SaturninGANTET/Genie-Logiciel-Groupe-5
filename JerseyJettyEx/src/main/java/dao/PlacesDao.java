@@ -8,6 +8,12 @@ public interface PlacesDao {
 
 
 	List<Places> getPlaces(String name);
+	boolean addPlaces(Places places);
+	boolean deletePlaces(String friend);
+	boolean modifyPlacesName(String name,String newname);
+	boolean modifyPlacesMessage(String name,String newname);
+	boolean modifyPlacesPosition(String name,String newname);
+	List<Places> nomPlaces(String search);
 	
 }
 /*
