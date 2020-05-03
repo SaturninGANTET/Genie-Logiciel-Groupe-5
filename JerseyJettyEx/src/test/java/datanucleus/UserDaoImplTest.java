@@ -31,8 +31,8 @@ public class UserDaoImplTest {
 
 		User action = new User();
 		Map map = new Map();
-		lfriend.add(action);
-		lmap.add(map);
+		lfriend.add(0,action);
+		lmap.add(0, map);
 		
 		action.setEmail("test");
 		action.setPassword("mdp");
