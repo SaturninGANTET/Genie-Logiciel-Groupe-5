@@ -8,7 +8,9 @@ import javax.jdo.PersistenceManagerFactory;
 import org.datanucleus.api.jdo.JDOPersistenceManagerFactory;
 import org.datanucleus.metadata.PersistenceUnitMetaData;
 
+import dao.dn.MapDaoImpl;
 import dao.dn.UserDaoImpl;
+import dao.fake.MapFakeDao;
 import dao.fake.UserFakeDao;
 
 
@@ -27,6 +29,14 @@ public class Dao {
 			return (UserDao) new UserFakeDao();
 		}else {
 			return new UserDaoImpl(pmf);
+		}
+	}
+	
+	public static MapDao getMapDao() {
+		if(onoff) {
+			return (MapDao) new MapFakeDao();
+		} else {
+			return new MapDaoImpl(pmf);
 		}
 	}
 }

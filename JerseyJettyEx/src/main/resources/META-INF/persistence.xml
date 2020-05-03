@@ -6,7 +6,10 @@
     <!-- Test configuration -->
     <persistence-unit name="DataSource">
     	<class>dao.User</class>
+<<<<<<< HEAD
     	<class>dao.Places</class>
+=======
+>>>>>>> branch 'master' of https://github.com/SaturninGANTET/Genie-Logiciel-Groupe-5
     	<class>dao.Map</class>
         <exclude-unlisted-classes/>
         

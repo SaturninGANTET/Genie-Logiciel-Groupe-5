@@ -146,3 +146,24 @@ $(function(){
 	});
 });
 
+
+/**
+Test satutu
+*/
+
+function postServerDataSatutu(url, data, success){
+    console.log(data);
+    $.ajax({
+        type: 'POST',
+        data: data,
+        url:url
+    }).done(success);
+}
+
+register = () =>{
+    console.log("function register() called");
+    console.log(document.getElementById("champ-pass").value);
+    postServerDataSatutu("ws/login/register","email="+document.getElementById("champ-email").value+"&pass="+document.getElementById("champ-pass").value,function(result){
+        console.log(result);
+    });
+}
