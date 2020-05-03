@@ -4,9 +4,10 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd" version="1.0">
 
     <!-- Test configuration -->
-    <persistence-unit name="Exemple">
+    <persistence-unit name="DataSource">
     	<class>dao.User</class>
-        <exclude-unlisted-classes/>
+    	<class>dao.Places</class>
+    	<class>dao.Map</class>
         
         <properties>
             <property name="javax.jdo.option.ConnectionURL" value="jdbc:hsqldb:mem:example"/>
@@ -22,5 +23,6 @@
         </properties>
         
     </persistence-unit>
+    
 
 </persistence>

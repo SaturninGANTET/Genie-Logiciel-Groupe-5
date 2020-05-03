@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MapFakeDao implements MapDao{
+public class MapFakeDao{// implements MapDao{
 
 	public List<Map> getMap(String catagorys) {
 		Map maps = new Map();
