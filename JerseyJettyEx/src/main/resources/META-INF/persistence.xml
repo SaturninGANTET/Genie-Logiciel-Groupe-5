@@ -6,6 +6,7 @@
     <!-- Test configuration -->
     <persistence-unit name="DataSource">
     	<class>dao.User</class>
+    	<class>dao.Map</class>
         <exclude-unlisted-classes/>
         
         <properties>
