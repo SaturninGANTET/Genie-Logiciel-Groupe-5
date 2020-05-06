@@ -24,8 +24,15 @@ public class User {
 	private String position;
 	private String password;
 	private String email;
+	
+	@Persistent(dependentElement = "true")
 	private List<Map> Lmap;
+	
+	// la liste est sauvegardé et pas supprimé quand on supprime un utiliser
+	@Persistent(dependentElement = "false")
 	private List<User> Lfriends;
+	
+	@Persistent(dependentElement = "true")
 	private List<Itinerary> Litinerary;
 	
 	

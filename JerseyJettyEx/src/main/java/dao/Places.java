@@ -12,12 +12,13 @@ public class Places {
 	
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.NATIVE)
-	public static int id = 0;
+	public int id = 0;
 	
 	private String name;
 	private String message;
 	private String position; // name of the place, but we can add a position with a number calculate 
 							// between the distance of the person.
+	@Persistent
 	private List<Object> Lpictures; //name, pictures and description
 	
 	public String getName() {

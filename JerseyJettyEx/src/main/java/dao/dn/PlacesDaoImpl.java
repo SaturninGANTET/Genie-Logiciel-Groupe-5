@@ -76,7 +76,7 @@ public class PlacesDaoImpl implements PlacesDao {
 		try{
 			tx.begin();
 			Places user=this.nomPlaces(friend).get(0);
-			int userid = Places.id;
+			int userid = user.id;
 			if(user!=null) {
 				Query q = pm.newQuery(Places.class);
 				q.declareParameters("Integer userid");

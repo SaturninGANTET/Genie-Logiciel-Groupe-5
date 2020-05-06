@@ -24,6 +24,7 @@ public class UserDaoImplTest {
 		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("DataSource");
 		UserDao actionDao = new UserDaoImpl(pmf);
 		
+		
 		List<User> lfriend = new ArrayList();
 		List<Map> lmap = new ArrayList();
 
