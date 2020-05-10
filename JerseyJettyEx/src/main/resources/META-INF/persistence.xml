@@ -8,6 +8,7 @@
     	<class>dao.User</class>
     	<class>dao.Places</class>
     	<class>dao.Map</class>
+    	<class>dao.Markeur</class>
         
         <properties>
             <property name="javax.jdo.option.ConnectionURL" value="jdbc:hsqldb:mem:example"/>

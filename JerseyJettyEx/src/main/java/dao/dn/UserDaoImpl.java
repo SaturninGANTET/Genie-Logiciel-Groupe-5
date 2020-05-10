@@ -27,13 +27,22 @@ public class UserDaoImpl implements UserDao{
 	}
 	
 	public boolean addUser(User user) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		pm.makePersistent(user);
+		// sout essentiel sinon ça marche pas :)
+		System.out.println(user.getLfriends());
+		pm.close();
+		return true;
+	}
+	
+	/*
+	public boolean addUser(User user) {
 			PersistenceManager pm = pmf.getPersistenceManager();
 			Transaction tx = pm.currentTransaction();
 			boolean b =true;
 			try {
 				tx.begin();
 				pm.makePersistent(user);
-				
 				tx.commit();
 			}
 			finally {
@@ -45,6 +54,7 @@ public class UserDaoImpl implements UserDao{
 			return b;
 
 		}
+		*/
 	
 	@SuppressWarnings("unchecked")
 	public User getUserByEmail(String name) {
@@ -123,6 +133,7 @@ public class UserDaoImpl implements UserDao{
 		}
 		return b;
 	}
+	
 	
 	@Override
 	public boolean modifyUserName(String name,String newname) {
@@ -292,6 +303,8 @@ public class UserDaoImpl implements UserDao{
 			return detached;
 		}
 	}
+	
+	
 		
 	public void addFriend(User user, String friendName) {
 		return;

@@ -12,6 +12,8 @@ import javax.ws.rs.PathParam;
 
 import dao.Dao;
 import dao.Map;
+import dao.Markeur;
+import dao.MarkeurDao;
 import dao.Places;
 import dao.User;
 import dao.UserDao;
@@ -24,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Path("/login")
+@Path("/lef")
 public class LefResource {
 
     @POST
@@ -49,17 +51,54 @@ public class LefResource {
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public String register(@FormParam("email") String name,@FormParam("pass") String motDePasse) {
-    	if(Objects.isNull(name) ||Objects.isNull(motDePasse)) {
-    		return "Remplir tout les champs";
-    	}
-    	UserDao userDao = Dao.getUserDao();
-    	if(!Objects.isNull(userDao.getUserByEmail(name))){
-    		return "L'utilisateur existe déjà";
-    	}
-    	User nouveau = new User();
-    	nouveau.setEmail(name);
-    	nouveau.setPassword(motDePasse);
-    	userDao.addUser(nouveau);
-    	return "Utilisateur ajouté";
+        if(Objects.isNull(name) ||Objects.isNull(motDePasse)) {
+            return "Remplir tout les champs";
+        }
+        UserDao userDao = Dao.getUserDao();
+        if(!Objects.isNull(userDao.getUserByEmail(name))){
+            return "L'utilisateur existe déjà";
+        }
+        User nouveau = new User();
+        nouveau.setEmail(name);
+        nouveau.setPassword(motDePasse);
+        userDao.addUser(nouveau);
+        return "Utilisateur ajouté";
+    }
+    	
+    @POST
+    @Path("/marker/add")
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public String markerAdd(@FormParam("lat") Double lat,@FormParam("lmg") Double lng) {
+        MarkeurDao markeurDao = Dao.getMarkeurDao();
+        Markeur mark = new Markeur();
+        mark.setLatitude(lat);
+        mark.setLongitude(lng);
+        markeurDao.addMarkeur(mark);
+        return "Marqueur ajouté";
+   }
+    
+    @POST
+    @Path("/marker/modifyName")
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public String markerModifyName(@FormParam("lat") double lat,@FormParam("lng") double lng, @FormParam("newName") String newName) {
+        MarkeurDao markeurDao = Dao.getMarkeurDao();
+        Markeur mark = markeurDao.getMarkeur(lng, lat);
+        if(Objects.isNull(newName))
+        	return "pas de nouveau nom";
+        markeurDao.modifyMarkeurName(mark, newName);
+        return "Marqueur modifié";
+    }
+    
+    
+    @GET
+    @Path("/marker/get/{lat}/{lng}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String markerGet(@PathParam("lat") Double lat,@PathParam("lng") Double lng) {
+        MarkeurDao markeurDao = Dao.getMarkeurDao();
+        Markeur mark = markeurDao.getMarkeur(lng, lat);
+    //    return lat + "" + lng;
+        return  "<input id=\"ActualmarkName\">"+mark.getName()+"</span><br><br><button id=\"btn2\">add message</button><br><br><button id=\"btn3\">add picture</button><br>";
     }
 }

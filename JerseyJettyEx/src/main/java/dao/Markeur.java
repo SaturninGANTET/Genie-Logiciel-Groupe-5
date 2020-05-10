@@ -14,7 +14,7 @@ public class Markeur {
 //	@Persistent(valueStrategy = IdGeneratorStrategy.NATIVE)
 	public int id = 0;
 	
-	private String name;
+	private String name = "unamed";
 	private String message;
 	private Double latitude;
 	private Double longitude;

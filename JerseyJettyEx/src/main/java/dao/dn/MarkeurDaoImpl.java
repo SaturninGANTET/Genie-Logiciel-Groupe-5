@@ -21,7 +21,7 @@ private PersistenceManagerFactory pmf;
 	
 	
 	@SuppressWarnings("unchecked")
-	public Markeur getMarkeur(Double longitude, Double latitude) {
+	public Markeur getMarkeur(Double lng, Double lat) {
 		
 		List<Markeur> markeur = null;
 		List<Markeur> detached = new ArrayList<Markeur>();
@@ -30,10 +30,10 @@ private PersistenceManagerFactory pmf;
 		try{
 			tx.begin();
 			Query q = pm.newQuery(Markeur.class);
-			q.declareParameters("String user");
-			q.setFilter("username == user");
+			q.declareParameters("Double lng, Double lat");
+			q.setFilter("longitude == lng && latitude == lat");
 		
-			markeur = (List<Markeur>) q.execute(longitude,latitude);
+			markeur = (List<Markeur>) q.execute(lng,lat);
 			detached = (List<Markeur>) pm.detachCopyAll(markeur);
 			
 			tx.commit();

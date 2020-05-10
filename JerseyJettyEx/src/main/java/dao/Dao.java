@@ -9,6 +9,7 @@ import org.datanucleus.api.jdo.JDOPersistenceManagerFactory;
 import org.datanucleus.metadata.PersistenceUnitMetaData;
 
 import dao.dn.MapDaoImpl;
+import dao.dn.MarkeurDaoImpl;
 import dao.dn.UserDaoImpl;
 import dao.fake.MapFakeDao;
 import dao.fake.UserFakeDao;
@@ -38,5 +39,9 @@ public class Dao {
 		} else {
 			return new MapDaoImpl(pmf);
 		}
+	}
+	
+	public static MarkeurDao getMarkeurDao() {
+		return new MarkeurDaoImpl(pmf);
 	}
 }

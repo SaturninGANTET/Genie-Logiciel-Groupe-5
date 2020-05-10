@@ -71,16 +71,20 @@ macarte.on('click', onMapClick);
 // affiche un message de destination en cliquant
 
 //affiche un markeur
-
+var i = 0;
+var latlng;
 macarte.on('click', function(e) {
-
-    var marker = L.marker(e.latlng, { draggable: true }).addTo(macarte);
-   marker.bindPopup('<span id="btn1">Name</span><br><br><button id="btn2">add message</button><br><br><button id="btn3">add picture</button><br>').openPopup();
-   
+	//latlng = e.latLng;
+   console.log("testo" + e.latlng.lat);
+   postServerDataSatutu("ws/lef/marker/add","lat="+e.latlng.lat+"&lmg="+e.latlng.lng,function(result){
+       console.log(result);
+   });
+   var marker = L.marker(e.latlng, { draggable: true }).addTo(macarte);
+   marker.bindPopup('<input id="markName"></span><br><br><button id="btn2">add message</button><br><br><button id="btn3">add picture</button><br>').openPopup();
+   i++;
    marker.on('dblclick', function(e) {
      console.log(e);
      macarte.removeLayer(marker);
-   
    });
 
    } );
@@ -98,11 +102,27 @@ macarte.on('click', function(e) {
      console.log('la=====>', e);
    });
    
-   macarte.on("popupopen", function(){
-     document.getElementById("btn1").onclick = function(){
-       null;
-     }
+   macarte.on("popupopen", function(e){
+     var marker = e.popup._source;
+     getServerDataSatutu("ws/lef/marker/get/"+marker._latlng.lat+"/"+marker._latlng.lng,function(result){
+    	e.popup.setContent(result);
+    	console.log(result);
+    	document.getElementById("ActualmarkName").onchange = function(){
+  			postServerDataSatutu("ws/lef/marker/modifyName","lat="+marker._latlng.lat+"&lng="+marker._latlng.lng+"&newName="+document.getElementById("ActualmarkName").value,function(result){
+  				console.log(result);
+  			});
+  		}
+  	 });
    });
+
+
+   macarte.on("popupclose", function(e){
+   	console.log("FERMé");
+   	console.log(e.popup._source);
+   	e.popup.setContent('<input id="markName"></span><br><br><button id="btn2">add message</button><br><br><button id="btn3">add picture</button><br>');
+   });
+
+
    macarte.on("popupopen", function(){
      document.getElementById("btn2").onclick = function(){
       null;
@@ -114,6 +134,13 @@ macarte.on('click', function(e) {
      }
    });
 
+// test satutu
+   macarte.on("popupopen", function(e){ 
+     var marker = e.popup._source;
+     console.log(marker);
+     console.log(marker._latlng.lat);
+     console.log(marker._latlng.lng);
+   });
 }
    /*
 macarte.on('click', function(e) {
@@ -198,7 +225,6 @@ Test satutu
 */
 
 function postServerDataSatutu(url, data, success){
-    console.log(data);
     $.ajax({
         type: 'POST',
         data: data,
@@ -206,10 +232,17 @@ function postServerDataSatutu(url, data, success){
     }).done(success);
 }
 
+function getServerDataSatutu(url, success){
+    $.ajax({
+        type: 'GET',
+        url:url
+    }).done(success);
+}
+
 register = () =>{
     console.log("function register() called");
     console.log(document.getElementById("champ-pass").value);
-    postServerDataSatutu("ws/login/register","email="+document.getElementById("champ-email").value+"&pass="+document.getElementById("champ-pass").value,function(result){
+    postServerDataSatutu("ws/lef/register","email="+document.getElementById("champ-email").value+"&pass="+document.getElementById("champ-pass").value,function(result){
         console.log(result);
     });
 }

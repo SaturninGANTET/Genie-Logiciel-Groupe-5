@@ -33,7 +33,7 @@ public class MapDaoImplTest {
         System.out.println(map.id);
         mapDao.addMAp(map);
         Assert.assertEquals(2, mapDao.getAllMap().size());
-        //mapDao.modifyMapName(map, "A new Name");
+        mapDao.modifyMapName(map, "A new Name");
         //Assert.assertEquals("A new name", mapDao.getMapById(1).getName());
 		/*
         Assert.assertEquals("test", actionDao.getUserByEmail("test").getName());

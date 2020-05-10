@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
@@ -16,9 +17,9 @@ import javax.jdo.annotations.PrimaryKey;
 @PersistenceCapable
 public class User {
 
-//	@PrimaryKey
-//	@Persistent(valueStrategy = IdGeneratorStrategy.NATIVE)
-	public int id = 0;
+	@PrimaryKey
+	@Persistent(valueStrategy = IdGeneratorStrategy.NATIVE)
+	public Long id = null;
 	
 	private String name;
 	private String position;
@@ -35,11 +36,16 @@ public class User {
 	@Persistent(dependentElement = "true")
 	private List<Itinerary> Litinerary;
 	
+	public User() {
+		super();
+		this.Lmap = new ArrayList<Map>();
+		this.Lfriends = new ArrayList<User>();
+	}
 	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getName() {
