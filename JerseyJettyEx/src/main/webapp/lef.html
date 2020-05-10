@@ -4,7 +4,15 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
-        
+        <body style="background-color:#092756;
+        background: -moz-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%),-moz-linear-gradient(top,  rgba(57,173,219,.25) 0%, rgba(42,60,87,.4) 100%), -moz-linear-gradient(-45deg,  #670d10 0%, #092756 100%);
+        background: -webkit-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -webkit-linear-gradient(top,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -webkit-linear-gradient(-45deg,  #670d10 0%,#092756 100%);
+        background: -o-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -o-linear-gradient(top,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -o-linear-gradient(-45deg,  #670d10 0%,#092756 100%);
+        background: -ms-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -ms-linear-gradient(top,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -ms-linear-gradient(-45deg,  #670d10 0%,#092756 100%);
+        background: -webkit-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), linear-gradient(to bottom,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), linear-gradient(135deg,  #670d10 0%,#092756 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3E1D6D', endColorstr='#092756',GradientType=1 );"
+        ></body>
+
 
         <!-- Fichiers CSS -->
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
@@ -40,23 +48,17 @@
     crossorigin=""></script>
         
         <!-- Front template -->
-
-        <head>
-            <meta charset="utf-8" />
-            <title>Connexion map</title>
-            <link rel="stylesheet" href="style.css">
-            
-          </head>
         
         
              <div class="limiter"></div>
               <div id="Bouton">
-              <div class="wrap-login100"></div>
+              <!--div class="wrap-login100"></div> permet d'élargir-->
                 <form class="login100-form validate-form" action="ws/login/login" method="POST" id="form-login">
                 <span class="login100-form-title p-b-26">
                     Connexion
                 </span>
               <div class="wrap-input100 validate-input" data-validate = "Valid email is: a@b.c">
+
                                 <input class="input100" type="text" name="email" id="champ-email">
                                 <span class="focus-input100" data-placeholder="Email"></span>
                             </div>
@@ -65,7 +67,8 @@
                                 <span class="btn-show-pass">
                                     <i class="zmdi zmdi-eye"></i>
                                 </span>
-                                <input class="input100" type="password" name="pass" id="champ-pass">
+                                <input class="input100" type="password" name="pass" required="required" id="champ-pass" />
+                                <!--<input class="input100" type="password" name="pass" id="champ-pass">-->
                                 <span class="focus-input100" data-placeholder="Password"></span>
                             </div>
                   <div class="container-login100-form-btn">
