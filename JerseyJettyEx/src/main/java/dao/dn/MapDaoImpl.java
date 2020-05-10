@@ -78,7 +78,7 @@ public class MapDaoImpl implements MapDao{
 		return detached.get(0);
 	}
 	
-	////////////////////////////////////////////////////
+	//////////////////////////////////////////////////// ! A majuscule dans le nom de la fonction
 	@Override
 	public boolean addMAp(Map map) {
 		PersistenceManager pm = pmf.getPersistenceManager();
