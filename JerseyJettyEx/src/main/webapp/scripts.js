@@ -26,6 +26,25 @@ window.onload = function(){
 
     }).addTo(macarte);
 
+  // ajout marker DAO
+  getServerDataSatutu("ws/lef/marker/getAll",function(result){
+  	console.log(result);
+  	var lignes = result.toString().split("\n");
+  	lignes.forEach(function(item){
+  		console.log(item);
+  		latlng = item.toString().split("&");
+  		console.log(latlng);
+  		var marker = L.marker([parseFloat(latlng[0]),parseFloat(latlng[1])],{ draggable: true}).addTo(macarte);
+	    marker.bindPopup('<input id="markName"></span><br><br><button id="btn2">add message</button><br><br><button id="btn3">add picture</button><br>').openPopup();
+	    marker.on('dblclick', function(e) {
+    		macarte.removeLayer(marker);
+     		deleteServerDataSatutu("ws/lef/marker/delete/"+marker._latlng.lat+"/"+marker._latlng.lng,function(result){
+     		console.log(result);
+     	});
+   	});
+
+  	})
+  });
 
   //adding barre de recherche
   var searchControl = L.esri.Geocoding.geosearch().addTo(macarte);
@@ -71,20 +90,20 @@ macarte.on('click', onMapClick);
 // affiche un message de destination en cliquant
 
 //affiche un markeur
-var i = 0;
-var latlng;
 macarte.on('click', function(e) {
-	//latlng = e.latLng;
    console.log("testo" + e.latlng.lat);
-   postServerDataSatutu("ws/lef/marker/add","lat="+e.latlng.lat+"&lmg="+e.latlng.lng,function(result){
+   postServerDataSatutu("ws/lef/marker/add","lat="+e.latlng.lat+"&lng="+e.latlng.lng,function(result){
        console.log(result);
    });
    var marker = L.marker(e.latlng, { draggable: true }).addTo(macarte);
    marker.bindPopup('<input id="markName"></span><br><br><button id="btn2">add message</button><br><br><button id="btn3">add picture</button><br>').openPopup();
-   i++;
+   
+
    marker.on('dblclick', function(e) {
-     console.log(e);
      macarte.removeLayer(marker);
+     deleteServerDataSatutu("ws/lef/marker/delete/"+marker._latlng.lat+"/"+marker._latlng.lng,function(result){
+     	console.log(result);
+     });
    });
 
    } );
@@ -102,11 +121,12 @@ macarte.on('click', function(e) {
      console.log('la=====>', e);
    });
    
+
+   //Modfife
    macarte.on("popupopen", function(e){
      var marker = e.popup._source;
      getServerDataSatutu("ws/lef/marker/get/"+marker._latlng.lat+"/"+marker._latlng.lng,function(result){
     	e.popup.setContent(result);
-    	console.log(result);
     	document.getElementById("ActualmarkName").onchange = function(){
   			postServerDataSatutu("ws/lef/marker/modifyName","lat="+marker._latlng.lat+"&lng="+marker._latlng.lng+"&newName="+document.getElementById("ActualmarkName").value,function(result){
   				console.log(result);
@@ -117,8 +137,6 @@ macarte.on('click', function(e) {
 
 
    macarte.on("popupclose", function(e){
-   	console.log("FERMé");
-   	console.log(e.popup._source);
    	e.popup.setContent('<input id="markName"></span><br><br><button id="btn2">add message</button><br><br><button id="btn3">add picture</button><br>');
    });
 
@@ -135,12 +153,6 @@ macarte.on('click', function(e) {
    });
 
 // test satutu
-   macarte.on("popupopen", function(e){ 
-     var marker = e.popup._source;
-     console.log(marker);
-     console.log(marker._latlng.lat);
-     console.log(marker._latlng.lng);
-   });
 }
    /*
 macarte.on('click', function(e) {
@@ -228,6 +240,13 @@ function postServerDataSatutu(url, data, success){
     $.ajax({
         type: 'POST',
         data: data,
+        url:url
+    }).done(success);
+}
+
+function deleteServerDataSatutu(url, success){
+    $.ajax({
+        type: 'DELETE',
         url:url
     }).done(success);
 }

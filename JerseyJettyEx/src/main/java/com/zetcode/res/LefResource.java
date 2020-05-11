@@ -69,7 +69,7 @@ public class LefResource {
     @Path("/marker/add")
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public String markerAdd(@FormParam("lat") Double lat,@FormParam("lmg") Double lng) {
+    public String markerAdd(@FormParam("lat") Double lat,@FormParam("lng") Double lng) {
         MarkeurDao markeurDao = Dao.getMarkeurDao();
         Markeur mark = new Markeur();
         mark.setLatitude(lat);
@@ -101,4 +101,29 @@ public class LefResource {
     //    return lat + "" + lng;
         return  "<input id=\"ActualmarkName\">"+mark.getName()+"</span><br><br><button id=\"btn2\">add message</button><br><br><button id=\"btn3\">add picture</button><br>";
     }
+    
+    @DELETE
+    @Path("/marker/delete/{lat}/{lng}")
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public String markerDelete(@PathParam("lat") Double lat,@PathParam("lng") Double lng) {
+    	MarkeurDao markeurDao = Dao.getMarkeurDao();
+    	Markeur mark = markeurDao.getMarkeur(lng, lat);
+    	markeurDao.deleteMarkeur(mark);
+    	return "marquer supprimé";
+    }
+    
+    @GET
+    @Path("/marker/getAll")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String markerGetAll() {
+        MarkeurDao markeurDao = Dao.getMarkeurDao();
+        List<Markeur> mark = markeurDao.getAllMarkeur();
+        String ret = "";
+        for(Markeur m : mark) {
+        	ret += m.getLatitude() +"&" + m.getLongitude() + "\n";
+        }
+        return ret;
+    }
+    
 }
