@@ -8,8 +8,10 @@ import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
+import dao.Map;
 import dao.Markeur;
 import dao.MarkeurDao;
+import dao.User;
 
 public class MarkeurDaoImpl implements MarkeurDao {
 	
@@ -49,6 +51,30 @@ private PersistenceManagerFactory pmf;
 		}
 		return detached.get(0);
 	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<Markeur> getAllMarkeur(){		
+		List<Markeur> markeur = null;
+		List<Markeur> detached = new ArrayList<Markeur>();
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try{
+			tx.begin();
+			Query q = pm.newQuery(Markeur.class);
+			markeur = (List<Markeur>) q.execute();
+			detached = (List<Markeur>) pm.detachCopyAll(markeur);
+			tx.commit();
+		}
+		finally {
+			if(tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+		return detached;	
+	}
+	
 	
 	@Override
 	public boolean addMarkeur(Markeur markeur) {

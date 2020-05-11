@@ -116,7 +116,7 @@ public class UserDaoImpl implements UserDao{
 		try{
 			tx.begin();
 			User user=this.nomUser(friend).get(0);
-			int userid = user.id;
+			long userid = user.id;
 			if(user!=null) {
 				Query q = pm.newQuery(User.class);
 				q.declareParameters("Integer userid");

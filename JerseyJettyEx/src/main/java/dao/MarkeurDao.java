@@ -1,10 +1,11 @@
 package dao;
 
+import java.util.List;
 
 public interface MarkeurDao {
 	
 	boolean addMarkeur(Markeur markeur);
-
+	List<Markeur> getAllMarkeur();
 	Markeur getMarkeur(Double longitude, Double latitude);
 	
 	boolean deleteMarkeur(Markeur markeur);

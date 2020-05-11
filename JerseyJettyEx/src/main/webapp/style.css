@@ -73,10 +73,10 @@ div#Bouton {position: absolute; z-index: 4;}
   }
 #carte { 
     position: absolute;
-    height: 600px;
-    width: 1080px; 
-    top : 100px;
-    left: 400px;
+    height: 700px;
+    width: 1300px; 
+    top : 0px;
+    left: 200px;
 }
 
 
