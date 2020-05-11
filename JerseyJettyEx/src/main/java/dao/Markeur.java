@@ -4,15 +4,17 @@ import java.util.List;
 
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.PrimaryKey;
+import javax.jdo.annotations.IdGeneratorStrategy;
 
 
 
 @PersistenceCapable
 public class Markeur {
 
-//	@PrimaryKey
-//	@Persistent(valueStrategy = IdGeneratorStrategy.NATIVE)
-	public int id = 0;
+	@PrimaryKey
+	@Persistent(valueStrategy = IdGeneratorStrategy.NATIVE)
+	public int id=0;
 	
 	private String name = "unamed";
 	private String message;

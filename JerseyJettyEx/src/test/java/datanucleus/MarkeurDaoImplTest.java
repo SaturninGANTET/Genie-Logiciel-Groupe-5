@@ -24,12 +24,22 @@ public class MarkeurDaoImplTest {
 	public void test() {
 		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("DataSource");
 		MarkeurDao markeurDao = new MarkeurDaoImpl(pmf);
+		
 		Markeur mark = new Markeur();
+		Markeur mark2 = new Markeur();
+		Markeur mark3 = new Markeur();
 		mark.setLatitude(1.0);
 		mark.setLongitude(1.0);
 		markeurDao.addMarkeur(mark);
+		markeurDao.addMarkeur(mark2);
+		markeurDao.addMarkeur(mark3);
 		Markeur nouveau = markeurDao.getMarkeur(1.0, 1.0);
 		System.out.println(nouveau.getName());
 		Assert.assertNotNull(nouveau);
+		Assert.assertEquals(3, markeurDao.getAllMarkeur().size());
+		Assert.assertTrue(markeurDao.deleteMarkeur(mark2));
+		Assert.assertEquals(2, markeurDao.getAllMarkeur().size());
+		Assert.assertTrue(markeurDao.modifyMarkeurName(mark,"paris"));
+		Assert.assertTrue(markeurDao.modifyMarkeurMessage(mark,"Capitale gastronomique"));
 	}
 }
