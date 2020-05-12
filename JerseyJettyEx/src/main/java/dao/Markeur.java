@@ -17,7 +17,7 @@ public class Markeur {
 	public int id=0;
 	
 	private String name = "unamed";
-	private String message;
+	private String message = "";
 	private Double latitude;
 	private Double longitude;
 

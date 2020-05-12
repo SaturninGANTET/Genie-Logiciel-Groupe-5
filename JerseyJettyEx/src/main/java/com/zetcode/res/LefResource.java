@@ -92,6 +92,20 @@ public class LefResource {
     }
     
     
+    @POST
+    @Path("/marker/modifyMessage")
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public String markerModifyMessage(@FormParam("lat") double lat,@FormParam("lng") double lng, @FormParam("newMessage") String newMessage) {    MarkeurDao markeurDao = Dao.getMarkeurDao();
+    	Markeur mark = markeurDao.getMarkeur(lng, lat);
+    	if(Objects.isNull(newMessage))
+    		return "pas de nouveau nom";
+    	markeurDao.modifyMarkeurMessage(mark, newMessage);
+    	return "Marqueur modifié";
+    }
+
+
+    
     @GET
     @Path("/marker/get/{lat}/{lng}")
     @Produces(MediaType.TEXT_PLAIN)
@@ -99,7 +113,7 @@ public class LefResource {
         MarkeurDao markeurDao = Dao.getMarkeurDao();
         Markeur mark = markeurDao.getMarkeur(lng, lat);
     //    return lat + "" + lng;
-        return  "<input id=\"ActualmarkName\">"+mark.getName()+"</span><br><br><button id=\"btn2\">add message</button><br><br><button id=\"btn3\">add picture</button><br>";
+        return  "<input id=\"ActualmarkName\" value="+mark.getName()+"></span><br><br><textarea id=\"CurrentMessage\" rows=\"3\" cols=\"33\">"+ (mark.getMessage().equals("") ? "Add message" : mark.getMessage()) +"</textarea><br><br><button id=\"btn3\">add picture</button><br>";
     }
     
     @DELETE
@@ -121,9 +135,8 @@ public class LefResource {
         List<Markeur> mark = markeurDao.getAllMarkeur();
         String ret = "";
         for(Markeur m : mark) {
-        	ret += m.getLatitude() +"&" + m.getLongitude() + "\n";
+        	ret += m.getLatitude() +"&" + m.getLongitude() + "&" + m.getName() +"\n";
         }
         return ret;
     }
-    
 }

@@ -1,4 +1,4 @@
-
+var listen;
 // On s'assure que la page est chargée
 window.onload = function(){
     // On initialise la carte sur les coordonnées GPS de Paris
@@ -28,14 +28,12 @@ window.onload = function(){
 
   // ajout marker DAO
   getServerDataSatutu("ws/lef/marker/getAll",function(result){
-  	console.log(result);
   	var lignes = result.toString().split("\n");
   	lignes.forEach(function(item){
-  		console.log(item);
   		latlng = item.toString().split("&");
-  		console.log(latlng);
-  		var marker = L.marker([parseFloat(latlng[0]),parseFloat(latlng[1])],{ draggable: true}).addTo(macarte);
-	    marker.bindPopup('<input id="markName"></span><br><br><button id="btn2">add message</button><br><br><button id="btn3">add picture</button><br>').openPopup();
+  		var marker = L.marker([parseFloat(latlng[0]),parseFloat(latlng[1])],{ draggable: false}).addTo(macarte);
+  		marker.bindTooltip(latlng[2].toString(),{permanent:true, direction:'top'});
+	    marker.bindPopup('<input id="markName"></span><br><br><button id="btn2">add message</button><br><br><button id="btn3">add picture</button><br>');
 	    marker.on('dblclick', function(e) {
     		macarte.removeLayer(marker);
      		deleteServerDataSatutu("ws/lef/marker/delete/"+marker._latlng.lat+"/"+marker._latlng.lng,function(result){
@@ -91,14 +89,12 @@ macarte.on('click', onMapClick);
 
 //affiche un markeur
 macarte.on('click', function(e) {
-   console.log("testo" + e.latlng.lat);
    postServerDataSatutu("ws/lef/marker/add","lat="+e.latlng.lat+"&lng="+e.latlng.lng,function(result){
        console.log(result);
    });
-   var marker = L.marker(e.latlng, { draggable: true }).addTo(macarte);
+   var marker = L.marker(e.latlng, { draggable: false }).addTo(macarte);
    marker.bindPopup('<input id="markName"></span><br><br><button id="btn2">add message</button><br><br><button id="btn3">add picture</button><br>').openPopup();
-   
-
+   marker.bindTooltip('unamed',{permanent:true, direction:'top'});
    marker.on('dblclick', function(e) {
      macarte.removeLayer(marker);
      deleteServerDataSatutu("ws/lef/marker/delete/"+marker._latlng.lat+"/"+marker._latlng.lng,function(result){
@@ -125,12 +121,35 @@ macarte.on('click', function(e) {
    //Modfife
    macarte.on("popupopen", function(e){
      var marker = e.popup._source;
-     getServerDataSatutu("ws/lef/marker/get/"+marker._latlng.lat+"/"+marker._latlng.lng,function(result){
+     console.log("AJOUT");
+     document.addEventListener("keyup",listen= (event) => {
+     	switch(event.key){
+     		case "Escape":
+     			marker.closePopup();
+     			return;
+     		case "Delete":
+     			macarte.removeLayer(marker);
+     			deleteServerDataSatutu("ws/lef/marker/delete/"+marker._latlng.lat+"/"+marker._latlng.lng,function(result){
+     				console.log(result);
+     			});
+     			return;
+     		default : 
+     			console.log(event.key + " has no effect");
+     	}
+     });
+  	 getServerDataSatutu("ws/lef/marker/get/"+marker._latlng.lat+"/"+marker._latlng.lng,function(result){
     	e.popup.setContent(result);
     	document.getElementById("ActualmarkName").onchange = function(){
   			postServerDataSatutu("ws/lef/marker/modifyName","lat="+marker._latlng.lat+"&lng="+marker._latlng.lng+"&newName="+document.getElementById("ActualmarkName").value,function(result){
   				console.log(result);
   			});
+  			marker.bindTooltip(document.getElementById("ActualmarkName").value,{permanent:true, direction:'top'});
+  		}
+  		document.getElementById("CurrentMessage").onchange = function(){
+
+  			postServerDataSatutu("ws/lef/marker/modifyMessage","lat="+marker._latlng.lat+"&lng="+marker._latlng.lng+"&newMessage="+document.getElementById("CurrentMessage").value,function(result){
+  				console.log(result);
+  			});	
   		}
   	 });
    });
@@ -138,14 +157,9 @@ macarte.on('click', function(e) {
 
    macarte.on("popupclose", function(e){
    	e.popup.setContent('<input id="markName"></span><br><br><button id="btn2">add message</button><br><br><button id="btn3">add picture</button><br>');
+   	document.removeEventListener("keyup",listen);
    });
 
-
-   macarte.on("popupopen", function(){
-     document.getElementById("btn2").onclick = function(){
-      null;
-     }
-   });
    macarte.on("popupopen", function(){
      document.getElementById("btn3").onclick = function(){
       null;
@@ -262,6 +276,6 @@ register = () =>{
     console.log("function register() called");
     console.log(document.getElementById("champ-pass").value);
     postServerDataSatutu("ws/lef/register","email="+document.getElementById("champ-email").value+"&pass="+document.getElementById("champ-pass").value,function(result){
-        console.log(result);
+        alert(result);
     });
 }
